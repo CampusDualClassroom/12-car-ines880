@@ -15,12 +15,16 @@ public class Car {
         this.brand = brand;
         this.model = model;
         this.fuel = fuel;
+        this.speedometer = 0;
+        this.tachometer = 0;
     }
 
     public Car(){
         this.brand = "Citroën";
         this.model = "Xsara";
         this.fuel = "Diesel";
+        this.speedometer = 0;
+        this.tachometer = 0;
     }
 
     public void start() {
@@ -41,46 +45,79 @@ public class Car {
         }
     }
     public void accelerate(){
+        if (this.speedometer < MAX_SPEED){
+            this.speedometer += 10;
+            this.tachometer += 500;
+            if (speedometer > MAX_SPEED) speedometer = MAX_SPEED;
+            tachometer += 500;
 
+        }
     }
 
     public void brake(){
+        if (this.speedometer > 0){
+            speedometer -= 10;
+            if (speedometer < 0) speedometer = 0;
+        }
 
     }
 
+
     public void turnAngleOfWheels(int angle){
+        wheelsAngle += angle;
+        if (wheelsAngle > 45) wheelsAngle = 45;
+        if (wheelsAngle < -45) wheelsAngle = -45;
 
     }
 
     public String showSteeringWheelDetail(){
 
-        return "";
+        return "Angulo actual del volante: " + wheelsAngle + "grados";
     }
 
     public boolean isReverse(){
 
-        return false;
+        return reverse;
     }
 
     public void setReverse(boolean reverse){
-
+       if ( speedometer == 0) {
+           this.reverse = reverse;
+           this.gear = reverse ? "R" : "N";
+       }
     }
 
     public void showDetails(){
+        System.out.println("Marca: " + brand);
+        System.out.println("Modelo: " + model);
+        System.out.println("Combustible: " + fuel);
+        System.out.println("Velocidad: " + speedometer + " km/h");
+        System.out.println("RPM: " + tachometer);
+        System.out.println("Marcha: " + gear);
+        System.out.println("Marcha atrás: " + reverse);
+        System.out.println("Ángulo volante: " + wheelsAngle + "°");
 
     }
 
     public boolean isTachometerGreaterThanZero() {
 
-        return false;
+        return this.tachometer > 0;
     }
 
     public boolean isTachometerEqualToZero() {
 
-        return false;
+        return this.tachometer == 0;
     }
 
     public static void main(String[] args) {
+        Car car1 = new Car("Toyota", "Corolla", "Gasolina");
+        car1.start();
+        car1.accelerate();
+        car1.turnAngleOfWheels(30);
+        car1.setReverse(true);
+        car1.showDetails();
+        car1.brake();
+        car1.stop();
 
     }
 
